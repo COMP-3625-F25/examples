@@ -9,7 +9,7 @@ class MiningGame:
     A very simple game: choose from two mines and receive a reward. Deduce which mine gives better reward overall
     """
 
-    def __init__(self, n_mines=2, render_delay=0.001):
+    def __init__(self, n_mines=2, render_delay=0.001, render=True):
         assert n_mines >= 2
         self.n_mines = n_mines
         self.reward_probabilities = np.array([0.4, 0.6] + [0.5] * (n_mines-2))
@@ -17,7 +17,12 @@ class MiningGame:
         dirname = os.path.dirname(__file__)
         self.im = np.hstack([imread(f'{dirname}/images/img_{i % 2}.png') for i in range(n_mines)])
         self.render_delay = render_delay
-        self._render()
+        self.render = render
+        if self.render:
+            self._render()
+
+    def get_average_values(self):
+        return self.reward_probabilities + -1 * (1 - self.reward_probabilities)
 
     def choose_mine(self, mine_number: int):
         """
@@ -29,7 +34,8 @@ class MiningGame:
         if np.random.random() < self.reward_probabilities[mine_number]:
             reward = 1
 
-        self._render(mine_number, reward)
+        if self.render:
+            self._render(mine_number, reward)
         return reward
 
     def _render(self, choice: int = None, reward: float = None):
