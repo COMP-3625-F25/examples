@@ -2,9 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import cdist
 from scipy.optimize import minimize
+from optimization_test_functions import himmelblaus_function
 
 
-def himmelblaus_function(input_vector) -> float:
-    x, y = input_vector
-    return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
-
+result = minimize(himmelblaus_function, x0=[0, 0], method='Nelder-Mead')
+print(result)
