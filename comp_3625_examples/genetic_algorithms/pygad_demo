@@ -1,5 +1,5 @@
 import pygad
-
+import numpy as np
 
 def himmelblaus_function(input_vector) -> float:
     """
@@ -15,6 +15,12 @@ def my_fitness_function(ga_instance, solution, solution_index):
     return -himmelblaus_function(solution)
 
 
+# custom parent selection operator (random selection)
+def random_selection(fitness, num_parents, ga_instance):
+    selected = np.random.choice(len(fitness), size=num_parents, replace=False)
+    return ga_instance.population[selected], selected
+
+
 ga = pygad.pygad.GA(num_generations=1000,
                     num_parents_mating=10,
                     fitness_func=my_fitness_function,
@@ -22,7 +28,7 @@ ga = pygad.pygad.GA(num_generations=1000,
                     num_genes=2, # each of our solutions is an x-y pair
                     init_range_low=-5,
                     init_range_high=5,
-                    parent_selection_type='rws',
+                    parent_selection_type=random_selection,
                     keep_parents=1,
                     crossover_type='single_point',
                     mutation_type='random',
