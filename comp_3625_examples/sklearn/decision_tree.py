@@ -33,7 +33,7 @@ plot_tree(model, fontsize=10, feature_names=['sepal length (cm)', 'petal length 
 x_test_pts = np.linspace(df.iloc[:, 0].min(), df.iloc[:, 0].max(), 50)
 y_test_pts = np.linspace(df.iloc[:, 1].min(), df.iloc[:, 1].max(), 50)
 test_coords = np.array(list(itertools.product(x_test_pts, y_test_pts)))
-classifications = [model.predict([test_coord])[0] for test_coord in test_coords]
+classifications = [model.predict_proba([test_coord])[0][0] for test_coord in test_coords]
 
 ax1[1].scatter(test_coords[:,0], test_coords[:, 1], c=classifications)
 
