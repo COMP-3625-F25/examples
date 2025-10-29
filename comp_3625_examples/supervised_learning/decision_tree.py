@@ -1,6 +1,8 @@
 from sklearn.datasets import load_iris
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 import itertools
 
@@ -21,12 +23,14 @@ ax1[0].set_ylabel('petal length (cm)')
 
 
 # fit a decision tree model to the data
-model = DecisionTreeClassifier(criterion='entropy', max_depth=2)
+# model = DecisionTreeClassifier(criterion='entropy', max_depth=2)
+# model = LogisticRegression()
+model = KNeighborsClassifier(n_neighbors=5)
 model.fit(X=df[['sepal length (cm)', 'petal length (cm)']].to_numpy(), y=df['target'])
 
-# plot the learned decision tree
-plt.figure()
-plot_tree(model, fontsize=10, feature_names=['sepal length (cm)', 'petal length (cm)'])
+# # plot the learned decision tree
+# plt.figure()
+# plot_tree(model, fontsize=10, feature_names=['sepal length (cm)', 'petal length (cm)'])
 
 # visualize how the model divides up the space into two classes
 # by using it to classify test points that span the space
