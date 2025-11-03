@@ -8,7 +8,7 @@ import numpy as np
 data = pd.read_csv('./unsupervised_learning/COMP_1701_grades.csv', index_col=None)
 
 # fit a kernel density estimator
-kde = KernelDensity(bandwidth=0.05)
+kde = KernelDensity(bandwidth=0.25)
 kde.fit(X=data['Midterm 1'].to_numpy().reshape((-1, 1)))
 
 # plot the learned distribution
