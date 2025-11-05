@@ -116,7 +116,7 @@ class TwoStateMDP(ToyMDP[tuple]):
             transition_probabilities={
                 'A': {
                     1: {'A': 1.0},
-                    2: {'A': 0.1, 'B': 0.9}
+                    2: {'A': 0.2, 'B': 0.8}
                 },
                 'B': {
                     1: {'A': 1.0},
@@ -307,7 +307,7 @@ class TicTacToe(Env):
 
 if __name__ == '__main__':
 
-    env = ThreeStateMDP()
+    env = TwoStateMDP()
     state, _ = env.reset()
     while True:
         action = input(f'state={state}, choose from actions: {env.get_actions(state)} ("q" to quit): ')
