@@ -27,7 +27,8 @@ for step in range(1000):
     # lookup action Q values for this state - choose the action with the highest Q value
     action = max(Q[state], key=Q[state].get)
 
-    # execute the Q value in the environment
+    # execute the action in the environment
+    # get the resulting new_state and reward (terminated is a boolean indicating if a terminal state has been reached)
     new_state, reward, terminated, _, _ = mdp.step(action)
 
     # add the new state to the Q table if it's never been seen before
