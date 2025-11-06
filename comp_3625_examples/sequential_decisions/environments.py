@@ -4,12 +4,13 @@ import numpy as np
 from gymnasium.spaces import Discrete
 import matplotlib.pyplot as plt
 from typing import Tuple, TypeVar
+import random
 ObsType = TypeVar("ObsType")
 
 
 class ToyMDP(Env[ObsType, int]):
 
-    def __init__(self, transition_probabilities, reward_function, current_state=None):
+    def __init__(self, transition_probabilities, reward_function, start_state=None):
         """
         :param transition_probabilities: nested dicts of state -> action -> new_state -> probability
         :param reward_function: callable with signature:
@@ -18,7 +19,8 @@ class ToyMDP(Env[ObsType, int]):
         """
         self.t = transition_probabilities
         self.r = reward_function
-        self.current_state = current_state or np.random.choice(list(self.t))
+        self.start_state = start_state
+        self.current_state = start_state or np.random.choice(list(self.t))
         self.action_space = Discrete(len(set(itertools.chain.from_iterable([list(self.t[state]) for state in self.t]))))
         self.observation_space = Discrete(len(self.t))
 
@@ -68,14 +70,14 @@ class ToyMDP(Env[ObsType, int]):
         randomize state and return observation
         :return: observation for the new state
         """
-        self.current_state = np.random.choice(list(self.t))
+        self.current_state = self.start_state or random.choice(list(self.t))
         return self._get_observation(), dict()
 
     def step(self, action: int) -> tuple[ObsType, float, bool, bool, dict]:
         """
         execute one step in the environment
         :param action: action number to perform
-        :return: new state, reward, and default values for terminated, truncated, info, and done
+        :return: new state, reward, terminated, and default values for truncated, info, and done
         """
         # get dict of possible new states & probabilities
         possible_new_states = self.t[self.current_state][action]
@@ -194,7 +196,7 @@ class RusselNorvigMDP(ToyMDP[tuple]):
         super().__init__(
             transition_probabilities=transition_probabilities,
             reward_function=self._reward_function,
-            current_state=(1, 1)
+            start_state=(1, 1)
         )
 
     def get_actions(self, state=None):
