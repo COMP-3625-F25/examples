@@ -209,7 +209,7 @@ class RusselNorvigMDP(ToyMDP[tuple]):
             return -1
         return self.movement_cost
 
-    def render(self):
+    def render(self, title_text=None):
         # plt.ion()
         grid = np.ones((3, 4)) * 1
         grid[1, 1] = 0
@@ -223,6 +223,10 @@ class RusselNorvigMDP(ToyMDP[tuple]):
 
         plt.xticks([0, 1, 2, 3], [1, 2, 3, 4])
         plt.yticks([0, 1, 2], [3, 2, 1])
+
+        if title_text:
+            plt.title(title_text)
+
         plt.pause(0.001)
 
 

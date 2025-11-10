@@ -39,7 +39,7 @@ for step in range(1000):
     
 
     # render the environment
-    mdp.render()
+    mdp.render(title_text=f'step #{step}')
     
     # prepare for next step
     if terminated:
@@ -48,4 +48,4 @@ for step in range(1000):
         state = new_state
     
     # small delay to make movements easier to see
-    time.sleep(0.01)
+    time.sleep(0.05)
