@@ -10,16 +10,22 @@ class Rtable:
         key = state, action, new_state
 
         if key not in self.rewards:
-            self.rewards[key] = (reward, 1)
+            self.rewards[key] = [reward, 1]
         else:
             self.rewards[key][1] += 1
-            self.rewards[key] = self.rewards[key] + ( reward - self.rewards[key]) / self.transtion_count
+            self.rewards[key][0] += reward  # = self.rewards[key][0] + ( reward - self.rewards[key]) / self.transtion_count
 
 
     def get_reward(self, state, action, new_state) -> float:
         """ return average reward for given transition """
         reward = self.rewards[(state, action, new_state)]
-        
-        if self.rewards[(state,action,new_state)] not in self.rewards:
-            reward = -1
-        return reward
+        return reward[0] / reward[1]
+
+        # if self.rewards[(state,action,new_state)] not in self.rewards:
+        #     reward = -1
+        # return reward
+
+r = Rtable()
+r.update('stateA', 'action0', 'stateB', 5)
+r.update('stateA', 'action0', 'stateB', 10)
+print(r.get_reward('stateA', 'action0', 'stateB'))
