@@ -21,5 +21,4 @@ class Ttable:
     
     def get_all_states(self) -> list:
         """ return list of all known states """
-        pass
-
+        return self.counts.keys()
