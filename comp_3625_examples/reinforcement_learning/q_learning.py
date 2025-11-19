@@ -36,8 +36,8 @@ for step in range(1000):
         Q[new_state] = {act: r_max for act in mdp.get_actions(state)}
 
     # UPDATE Q TABLE HERE
-    td_error = reward + gamma * max(Q[new_state].values()) - Q[state][action]
-    Q[state][action] += alpha *td_error
+    td_error = reward + gamma * max(Q[new_state].values()) - Q[state][action]   
+    Q[state][action] += alpha * td_error
 
     # render the environment
     mdp.render(title_text=f'step #{step}')
@@ -49,4 +49,4 @@ for step in range(1000):
         state = new_state
     
     # small delay to make movements easier to see
-    time.sleep(0.001)
+    time.sleep(0.01)
